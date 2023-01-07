@@ -47,7 +47,7 @@ if ( ! class_exists( 'Ajax_Posts_With_Category_Filter' ) ) {
 			self::$base_url   = plugin_dir_url( __FILE__ );
 			self::$inc_dir    = self::$base_dir . '/inc/';
 			$data             = $this->get_data();
-			self::$version    = $data['Version'];
+			self::$version    = time();
 			self::$author_uri = $data['AuthorURI'];
 			self::$prefix     = 'ajax-posts-with-category-filter';
 
@@ -81,7 +81,7 @@ if ( ! class_exists( 'Ajax_Posts_With_Category_Filter' ) ) {
 
 		public function register_scripts() {
 			// Styles
-			wp_register_style( 'ajax-posts-with-category-filter', self::$base_url . 'main.css', array(), $this->version );
+			wp_register_style( 'ajax-posts-with-category-filter', self::$base_url . 'main.css', array(), self::$version );
 
 			// Scripts
 			wp_register_script( 'ajax-posts-with-category-filter', self::$base_url . 'main.js', array( 'jquery' ), self::$version, true );
@@ -153,13 +153,14 @@ if ( ! class_exists( 'Ajax_Posts_With_Category_Filter' ) ) {
 				'orderby'        => 'date',
 				'order'          => 'DESC',
 				'paged'          => 1,
-			);
+			) ;
 
-			if ( isset( $_POST['category'] ) && 'all' != $_POST['category'] ) {
-				$query['category__in'] = sanitize_text_field( $_POST['category'] );
+			
+			if ( isset( $_POST['category'] ) && 'all' !=  $_POST['category'] ) {
+				$query['category__in']  = sanitize_text_field( $_POST['category'] );
 			}
-
-			$posts     = new WP_Query( $query );
+			
+			$posts = new WP_Query( $query);
 			$response  = '';
 			$max_pages = $posts->max_num_pages;
 
@@ -182,6 +183,7 @@ if ( ! class_exists( 'Ajax_Posts_With_Category_Filter' ) ) {
 			wp_send_json_success( $result );
 		}
 
+
 		public function posts_html() {
 			require self::$base_dir . 'single-post-content.php';
 		}
@@ -191,13 +193,13 @@ if ( ! class_exists( 'Ajax_Posts_With_Category_Filter' ) ) {
 			$categories     = '';
 
 			if ( $categories_obj ) {
-				$categories .= '<select name="ajax_category" id="ajax_category">';
-				$categories .= sprintf( '<option value="%s">%s</option>', 'all', esc_html__( 'All', 'ajax-posts-with-category-filter' ) );
+				$categories .= '<div class="ajax-category-wrap"><p>Filter by </p><select name="ajax_category" id="ajax_category">';
+				$categories .= sprintf( '<option value="%s">%s</option>', 'all', esc_html__( 'CATEGORY', 'ajax-posts-with-category-filter' ) );
 
 				foreach ( $categories_obj as $key => $value ) {
 					$categories .= sprintf( '<option value="%s">%s</option>', esc_attr( $key ), esc_html( $value ) );
 				}
-				$categories .= '</select>';
+				$categories .= '</select></div>';
 			}
 
 			return $categories;
@@ -226,14 +228,15 @@ if ( ! class_exists( 'Ajax_Posts_With_Category_Filter' ) ) {
 
 		public function get_load_more_button_html() {?>
 			<div class="btn__wrapper">
-				<a href="#!" class="btn btn__primary" id="load-more">Load more</a>
+				<a href="#!" class="btn btn__primary" id="load-more"><?php esc_html_e( 'View More', 'ajax-posts-with-category-filter' )?> </a>
 			</div>
 		<?php }
 
 		public function main() {
 			wp_enqueue_style( 'ajax-posts-with-category-filter' );
 			wp_enqueue_script( 'ajax-posts-with-category-filter' );
-
+			wp_enqueue_script( 'jquery-masonry' );
+			
 			ob_start();
 			echo '<div id="ajax-posts-with-category-filter">';
 			echo $this->generate_category_select();

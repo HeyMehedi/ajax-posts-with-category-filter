@@ -1,4 +1,4 @@
-.theme-blog-card__thumbnail img {
+.plugin-blog-card__thumbnail img {
 	max-width: 100% !important;
 }
 
@@ -6,4 +6,83 @@
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-gap: 15px;
+}
+
+.post-list article {
+	padding: 15px;
+	background: #fff;
+}
+
+.post-list h4 {
+	font-size: 48px;
+	line-height: 1;
+}
+
+.post-list article {
+	padding: 15px !important;
+	background: #fff !important;
+}
+
+.post-categories {
+	list-style: none;
+	margin: 0;
+	padding-bottom: 15px;
+	padding-top: 10px;
+}
+
+.post-categories a,
+.read-more a {
+	text-transform: uppercase;
+	text-decoration: underline;
+}
+
+.btn__wrapper {
+	text-align: center;
+	margin-top: 80px;
+}
+
+#load-more {
+	background: #E1B34A !important;
+	padding: 5px 50px;
+	font-size: 20px;
+	color: #000;
+	text-transform: uppercase;
+}
+
+#ajax_category {
+	border: none !important;
+	background: transparent;
+	box-shadow: none !important;
+	outline: none;
+}
+
+.ajax-category-wrap {
+	display: flex;
+	justify-content: center;
+	align-items: baseline;
+	margin-bottom: 30px;
+}
+
+.ajax-category-wrap p {
+	min-width: 175px;
+	text-align: right;
+	text-transform: uppercase;
+}
+
+.post-list h4.ajax-blog-card__title a.entry-title {
+	color: #000;
+	line-height: 1.3;
+}
+
+
+.post-list a.entry-title:hover {
+	color: var(--ast-global-color-1);
+}
+
+p.read-more a {
+	color: #000;
+}
+
+p.read-more a:hover {
+	color: var(--ast-global-color-1);
 }
