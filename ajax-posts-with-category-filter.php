@@ -194,7 +194,7 @@ if ( ! class_exists( 'Ajax_Posts_With_Category_Filter' ) ) {
 
 			if ( $categories_obj ) {
 				$categories .= '<div class="ajax-category-wrap"><p>Filter by </p><select name="ajax_category" id="ajax_category">';
-				$categories .= sprintf( '<option value="%s">%s</option>', 'all', esc_html__( 'CATEGORY', 'ajax-posts-with-category-filter' ) );
+				$categories .= sprintf( '<option value="%s">%s</option>', 'all', esc_html__( 'ALL CATEGORY', 'ajax-posts-with-category-filter' ) );
 
 				foreach ( $categories_obj as $key => $value ) {
 					$categories .= sprintf( '<option value="%s">%s</option>', esc_attr( $key ), esc_html( $value ) );
